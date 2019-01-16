@@ -3,14 +3,19 @@
 import socket
 
 def main():
-	server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	server_socket.bind(('127.0.0.1', 8081))
-	server_socket.listen(5)
-
-	while 1:
-		(client_socket, address) = server_socket.accept()
-
-
+	serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	serversocket.bind(('localhost', 8086))
+	serversocket.listen()
+	
+	conn, addr = serversocket.accept()
+	with conn:
+		print('connected by', addr)
+		while 1:
+			data = conn.recv(1024)
+			if not data:
+				break
+			print(str.encode('exit') in data)
+			conn.sendall(data)
 
 
 if __name__ == '__main__':
