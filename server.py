@@ -4,7 +4,7 @@ import socket
 
 def main():
 	serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	serversocket.bind(('localhost', 8086))
+	serversocket.bind(('localhost', 8085))
 	serversocket.listen()
 	
 	conn, addr = serversocket.accept()
@@ -12,10 +12,9 @@ def main():
 		print('connected by', addr)
 		while 1:
 			data = conn.recv(1024)
-			if not data:
+			if not data or str.encode('exit') in data:
 				break
-			print(str.encode('exit') in data)
-			conn.sendall(data)
+			print(data)
 
 
 if __name__ == '__main__':
