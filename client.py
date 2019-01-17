@@ -18,16 +18,28 @@ class mysocket:
 		while total_sent < msg_len:
 			encoded_bytes_msg = str.encode(msg[total_sent:])
 			sent = self.sock.send(encoded_bytes_msg)
-			print('sent byte num:', total_sent)
 			if sent == 0:
 				raise RunTimeError("socket conn broken")
 			total_sent = total_sent + sent
+
+def encrypt(msg):
+	secret_msg = ''
+	for char in msg:
+		secret_msg += chr(ord(char) + 1)
+
+	return(secret_msg)
 
 
 def main():
 	sender = mysocket()
 	sender.connect(host='127.0.0.1', port=8085)
-	sender.send_it('should see this \n')
+	while 1:
+		msg = input('enter msg: ')
+		if 'exit' in msg:
+			break
+		
+		encrypted_msg = encrypt(msg)
+		sender.send_it(encrypted_msg)
 
 if __name__ == '__main__':
 	main()
