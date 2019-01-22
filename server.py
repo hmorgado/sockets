@@ -14,7 +14,14 @@ def main():
 			data = conn.recv(1024)
 			if not data or str.encode('exit') in data:
 				break
-			print(data)
+			print(decrypt(data.decode('utf-8')))
+
+def decrypt(msg):
+	secret_msg = ''
+	for char in msg:
+		secret_msg += chr(ord(char) - 1)
+
+	return(secret_msg)
 
 
 if __name__ == '__main__':

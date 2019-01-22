@@ -1,11 +1,19 @@
 #!/usr/bin/python3.5
 
-def main():
+def encrypt(msg):
 	secret_msg = ''
-	for char in 'abc':
+	for char in msg:
 		secret_msg += chr(ord(char) + 1)
+	return(secret_msg)
 
-	print(secret_msg)
+
+def decrypt(msg):
+	secret_msg = ''
+	for char in msg:
+		secret_msg += chr(ord(char) - 1)
+	return(secret_msg)
+
 
 if __name__ == '__main__':
-	main()
+	print(encrypt('d'))
+	print(decrypt('e'))

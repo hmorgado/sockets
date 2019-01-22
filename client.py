@@ -26,8 +26,9 @@ def encrypt(msg):
 	secret_msg = ''
 	for char in msg:
 		secret_msg += chr(ord(char) + 1)
-
 	return(secret_msg)
+
+# tcpdump -nnXSs 1514 port 8085 -i lo
 
 
 def main():
