@@ -1,6 +1,7 @@
 #!/usr/bin/python3.5
 
 import socket
+from shift import Shift
 
 class mysocket:
 	def __init__(self, sock=None):
@@ -22,24 +23,18 @@ class mysocket:
 				raise RunTimeError("socket conn broken")
 			total_sent = total_sent + sent
 
-def encrypt(msg):
-	secret_msg = ''
-	for char in msg:
-		secret_msg += chr(ord(char) + 1)
-	return(secret_msg)
-
 # tcpdump -nnXSs 1514 port 8085 -i lo
-
 
 def main():
 	sender = mysocket()
 	sender.connect(host='127.0.0.1', port=8085)
+	encrypt = Shift()
 	while 1:
 		msg = input('enter msg: ')
 		if 'exit' in msg:
 			break
-		
-		encrypted_msg = encrypt(msg)
+
+		encrypted_msg = encrypt.shift('right', msg)
 		sender.send_it(encrypted_msg)
 
 if __name__ == '__main__':

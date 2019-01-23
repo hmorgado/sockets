@@ -1,6 +1,7 @@
 #!/usr/bin/python3.5
 
 import socket
+from shift import Shift
 
 def main():
 	serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -10,18 +11,13 @@ def main():
 	conn, addr = serversocket.accept()
 	with conn:
 		print('connected by', addr)
+		decrypt = Shift()
 		while 1:
 			data = conn.recv(1024)
 			if not data or str.encode('exit') in data:
 				break
-			print(decrypt(data.decode('utf-8')))
-
-def decrypt(msg):
-	secret_msg = ''
-	for char in msg:
-		secret_msg += chr(ord(char) - 1)
-
-	return(secret_msg)
+			decrypted_msg = decrypt.shift('left', data.decode('utf-8'))
+			print(decrypted_msg)
 
 
 if __name__ == '__main__':
